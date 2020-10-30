@@ -1,21 +1,19 @@
 const express = require("express");
 const router = express.Router();
-const actionsModel = require("./data/helpers/actionModel");
+const actionModel = require("./data/helpers/actionModel");
 
 router.get("/:id", (req, res) => {
   const id = req.params.id;
   if (!id) {
     res.status(500).json({ message: "Must have ID" });
   } else {
-    actionsModel
+    actionModel
       .get(id)
-      .then((success) => {
-        res.status(200).json({ success });
+      .then((working) => {
+        res.status(200).json({ working });
       })
       .catch((error) => {
-        res
-          .status(404)
-          .json({ message: "There was an error with your request" });
+        res.status(404).json({ message: "Your request isnt allowed" });
       });
   }
 });
@@ -31,10 +29,10 @@ router.post("/", (req, res) => {
       .status(500)
       .json({ message: "Description must be less than 128 characters" });
   } else {
-    actionsModel
+    actionModel
       .insert(req.body)
-      .then((success) => {
-        res.status(201).json({ success });
+      .then((working) => {
+        res.status(201).json({ working });
       })
       .catch((error) => {
         console.log(error);
@@ -51,10 +49,10 @@ router.put("/:id", (req, res) => {
   if (!id) {
     res.status(500).json({ message: "Must provide ID" });
   } else {
-    actionsModel
+    actionModel
       .update(id, changes)
-      .then((success) => {
-        res.status(200).json({ success });
+      .then((working) => {
+        res.status(200).json({ working });
       })
       .catch((error) => {
         res.status(404).json({ message: "There was an error" });
@@ -67,10 +65,10 @@ router.delete("/:id", (req, res) => {
   if (!id) {
     res.status(500).json({ message: "Must provide ID" });
   } else {
-    actionsModel
+    actionModel
       .remove(id)
-      .then((success) => {
-        res.status(200).json({ success });
+      .then((working) => {
+        res.status(200).json({ working });
       })
       .catch((error) => {
         console.log(error);
